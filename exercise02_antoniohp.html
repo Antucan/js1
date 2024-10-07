@@ -12,6 +12,27 @@
     <h1>EXERCISE 02</h1>
     <h2>Taula de propietats</h2>
     <div id="taula_propietats"></div>
+    <h2>Contador</h2>
+    <div>
+        <p id="count">00:00</p>
+        <button id="start">Start</button>
+        <button id="pause">Pause</button>
+        <button id="reset">Reset</button>
+        <input id="min" type="number" value="0" />
+        <input id="sec" type="number" value="0" />
+    </div>
+    <h2>Alarma</h2>
+    <div>
+        <p id="clock">00:00:00</p>
+        <button id="setAlarm">Set Alarm</button>
+        <select id="soundSelect">
+            <option value="SmashMouth-AllStar_64kb.mp3">AllStar</option>
+            <option value="DRUMC0.WAV">DRUMC0</option>
+        </select>
+        <input id="volume" type="range" min="0" max="100" value="50" />
+        <button id="playAlarm">Play Alarm</button>
+        <button id="stopAlarm">Stop Alarm</button>
+    </div>
 </body>
 
 </html>
