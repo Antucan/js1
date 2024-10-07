@@ -1,8 +1,8 @@
 let countdownInterval;
 let minutes = 0;
 let seconds = 0;
-
-// Get HTML elements
+let audio = new Audio('DRUMC0.WAV');
+// Guardo los elementos HTML en variables
 const countdownDisplay = document.getElementById('count');
 const startButton = document.getElementById('start');
 const pauseButton = document.getElementById('pause');
@@ -10,10 +10,10 @@ const resetButton = document.getElementById('reset');
 const minutesInput = document.getElementById('min');
 const secondsInput = document.getElementById('sec');
 
-// Set initial countdown display
+// Pongo la variable a 0
 countdownDisplay.textContent = `00:${seconds.toString().padStart(2, '0')}`;
 
-// Add event listeners
+// Añado eventos por cada boton
 startButton.addEventListener('click', startCountdown);
 pauseButton.addEventListener('click', pauseCountdown);
 resetButton.addEventListener('click', resetCountdown);
@@ -58,7 +58,7 @@ function countdown() {
 
 // Function to play music
 function playMusic() {
-    // Add music playing logic here
+    audio.play();
     console.log('Countdown reached 0! Music playing...');
 }
 /* ------------------------------------------------------ */
@@ -68,12 +68,12 @@ let alarmSound;
 let alarmVolume;
 
 // Get HTML elements
-const clockDisplay = document.getElementById('clock-display');
-const setAlarmButton = document.getElementById('set-alarm-button');
-const alarmSoundSelect = document.getElementById('alarm-sound-select');
-const alarmVolumeInput = document.getElementById('alarm-volume-input');
-const playAlarmButton = document.getElementById('play-alarm-button');
-const stopAlarmButton = document.getElementById('stop-alarm-button');
+const clockDisplay = document.getElementById('clock');
+const setAlarmButton = document.getElementById('setAlarm');
+const alarmSoundSelect = document.getElementById('soundSelect');
+const alarmVolumeInput = document.getElementById('volume');
+const playAlarmButton = document.getElementById('playAlarm');
+const stopAlarmButton = document.getElementById('stopAlarm');
 
 // Set initial clock display
 clockDisplay.textContent = `${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}`;
@@ -104,12 +104,12 @@ function setAlarm() {
 
 // Function to play alarm
 function playAlarm() {
-    // Play music using the selected sound and volume
+    alarmSound.play();
     console.log(`Playing alarm sound ${alarmSound} at volume ${alarmVolume}`);
 }
 
 // Function to stop alarm
 function stopAlarm() {
-    // Stop music
+    alarmSound.stop();
     console.log("Stopping alarm");
 }
