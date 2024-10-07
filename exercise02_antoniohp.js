@@ -99,21 +99,27 @@ c. L’usuari pot escollir entre diferents músiques
 d. L’usuari pot establir el volum
 e. En qualsevol moment l’usuari pot reproduir i aturar la música de l’alarmas
 */
-let clockInterval;
-let alarmTime;
-let alarmSound;
-let alarmVolume;
-
 // Get HTML elements
 const clockDisplay = document.getElementById('clock');
+const hourInput = document.getElementById('hour');
+const minuteInput = document.getElementById('minute');
 const setAlarmButton = document.getElementById('setAlarm');
 const alarmSoundSelect = document.getElementById('soundSelect');
 const alarmVolumeInput = document.getElementById('volume');
 const playAlarmButton = document.getElementById('playAlarm');
 const stopAlarmButton = document.getElementById('stopAlarm');
 
+let clockInterval;
+let alarmTime;
+let alarmSound = new Audio();
+let selectedSound;
+let alarmVolume;
+
+alarmSoundSelect.addEventListener('change', function () {
+    selectedSound = alarmSoundSelect.value;
+});
 // Set initial clock display
-clockDisplay.textContent = `${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}:${new Date().getSeconds().toString().padStart(2, '0')}`;
+clockDisplay.textContent = new Date().toLocaleTimeString();
 
 // Update clock display every second
 clockInterval = setInterval(updateClock, 1000);
@@ -121,7 +127,7 @@ clockInterval = setInterval(updateClock, 1000);
 // Function to update clock display
 function updateClock() {
     const currentTime = new Date();
-    clockDisplay.textContent = `${currentTime.getHours().toString().padStart(2, '0')}:${currentTime.getMinutes().toString().padStart(2, '0')}:${currentTime.getSeconds().toString().padStart(2, '0')}`;
+    clockDisplay.textContent = new Date().toLocaleTimeString();
 }
 
 // Add event listeners
@@ -132,21 +138,47 @@ stopAlarmButton.addEventListener('click', stopAlarm);
 // Function to set alarm
 function setAlarm() {
     alarmTime = new Date();
-    alarmTime.setHours(parseInt(prompt("Enter hour:")));
-    alarmTime.setMinutes(parseInt(prompt("Enter minute:")));
+    alarmTime.setHours(hourInput.value);
+    alarmTime.setMinutes(minuteInput.value);
     alarmTime.setSeconds(0);
-    alarmSound = alarmSoundSelect.value;
+    alarmSound.src = alarmSoundSelect.value;
     alarmVolume = alarmVolumeInput.value;
+    checkAlarm();
 }
+
+//Function to check alarm
+function checkAlarm() {
+    setInterval(function (params) {
+        const currentTime = new Date();
+        if (currentTime.getHours() == alarmTime.getHours()
+            && currentTime.getMinutes() == alarmTime.getMinutes()
+            && currentTime.getSeconds() == alarmTime.getSeconds()) {
+            playAlarm();
+        }
+    })
+}
+
+let AlarmPlaying = false;
 
 // Function to play alarm
 function playAlarm() {
-    alarmSound.play();
-    console.log(`Playing alarm sound ${alarmSound} at volume ${alarmVolume}`);
+    if (!AlarmPlaying) {
+        if (!alarmSound.src) {
+            alarmSound.src = alarmSoundSelect.value;
+        } else {
+            alarmSound.play();
+            alarmVolume = alarmVolumeInput.value;
+            alarmSound.volume = parseFloat(alarmVolume) / 100;
+            AlarmPlaying = true;
+            console.log(`Playing alarm sound ${alarmSoundSelect.value} at volume ${alarmVolume}`);
+        }
+    }
 }
 
 // Function to stop alarm
 function stopAlarm() {
-    alarmSound.stop();
+    alarmSound.pause();
+    alarmSound.currentTime = 0;
+    AlarmPlaying = false;
     console.log("Stopping alarm");
 }
