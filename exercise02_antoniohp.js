@@ -22,14 +22,3 @@ function showTable() {
         document.URL + `</td></tr>
                         </table>`;
 }
-/*
-4. 3p] Afegeix al document HTML un compte enrere inicialment a 00minuts i 00segons
-a. Permet que l’usuari pugui establir quants minuts i segons vol que duri.
-b. Permet que l’usuari inicií el compte enrere i el pugui aturar (restablint-lo a 0) i pausar
-c. Quan el compte enrere arribi a 0, avisa amb una música i permet que es pugui aturar.
-*/
-timer();
-function timer() {
-    let divTimer = document.getElementById("timer");
-    divTimer.innerHTML = timer;
-}
